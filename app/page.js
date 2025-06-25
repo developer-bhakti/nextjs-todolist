@@ -1,4 +1,4 @@
-// "use client" is used to tell the app that a particular component should run on the client side, not on the server.
+
 "use client"
 import React, { useState } from "react";
 
@@ -13,9 +13,31 @@ const page = () => {
     setTitle("");
     setDesc("");
     console.log(mainTask);
+  };
+
+  const deleteHandler = (i) => {
+     let copyTask = [...mainTask]
+     copyTask.splice(i,1)
+     setMainTask(copyTask)
   }
 
   let renderTask = <h2>No Task Available</h2>
+
+  if(mainTask.length >0){
+     renderTask = mainTask.map((t,i) => {
+      return (
+      <li key={i} className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-betweenw2/3">
+        <h5 className="text-2xl font-semibold">{t.title}</h5>
+        <h6 className="text-lg font-medium">{t.desc}</h6>
+      </div>
+      <button onClick={()=>{
+        deleteHandler(i)
+      }} className="bg-red-400 text-white px-4 py-2 rounded font-bold">Delete</button>
+      </li>
+      );
+  })
+  }
 
   return (
     <>
